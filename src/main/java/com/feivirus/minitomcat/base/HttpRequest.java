@@ -3,6 +3,8 @@ package com.feivirus.minitomcat.base;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.servlet.ServletRequest;
+
 import com.feivirus.minitomcat.base.protocolparser.HttpParser;
 import com.feivirus.minitomcat.base.protocolparser.HttpProtocol;
 import com.feivirus.minitomcat.util.BusinessConstant;
@@ -15,7 +17,7 @@ import lombok.Data;
  *
  */
 @Data
-public class HttpRequest {
+public class HttpRequest implements ServletRequest{
     /**
      * http请求的输入流
      */
