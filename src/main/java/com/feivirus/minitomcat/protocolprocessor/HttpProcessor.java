@@ -7,7 +7,7 @@ import java.net.Socket;
 
 import com.feivirus.minitomcat.base.HttpRequest;
 import com.feivirus.minitomcat.base.HttpResponse;
-import com.feivirus.minitomcat.connector.Connector;
+import com.feivirus.minitomcat.connector.HttpConnector;
 import com.feivirus.minitomcat.requestprocessor.RequestProcessor;
 import com.feivirus.minitomcat.requestprocessor.ServletProcessor;
 import com.feivirus.minitomcat.requestprocessor.StaticResourceProcessor;
@@ -20,9 +20,9 @@ import com.feivirus.minitomcat.util.BusinessConstant;
  *
  */
 public class HttpProcessor implements ProtocolProcessor {
-    private Connector connector;
+    private HttpConnector connector;
     
-    public HttpProcessor(Connector connector) {
+    public HttpProcessor(HttpConnector connector) {
         this.connector = connector;
     }
 
@@ -35,9 +35,10 @@ public class HttpProcessor implements ProtocolProcessor {
             HttpResponse httpResponse  = new HttpResponse(socket.getOutputStream());
             
             httpRequest.parse();
-            RequestProcessor requestProcessor = buildRequestProcessor(httpRequest.getHttpProtocol().getUrl());            
+            //RequestProcessor requestProcessor = buildRequestProcessor(httpRequest.getHttpProtocol().getUrl());            
           
-           requestProcessor.process(httpRequest, httpResponse);                        
+           //requestProcessor.process(httpRequest, httpResponse);      
+            connector.getContainer().invoke(httpRequest, httpResponse);
         } catch (IOException e) {
             e.printStackTrace();
         }
