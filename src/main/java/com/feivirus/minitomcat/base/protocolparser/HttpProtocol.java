@@ -13,6 +13,11 @@ public class HttpProtocol {
     private String url;
     
     /**
+     * http/https
+     */
+    private String protocol;
+    
+    /**
      * TODO
      * private Cookie cookie;  
      */ 

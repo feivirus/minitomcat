@@ -1,5 +1,7 @@
 package com.feivirus.minitomcat.container;
 
+import javax.servlet.ServletRequest;
+
 public interface Mapper {
     String getProtocol();
     
@@ -8,4 +10,6 @@ public interface Mapper {
     Container getContainer();
     
     void setContainer(Container container);
+    
+    Container map(ServletRequest request);
 }

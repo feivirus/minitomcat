@@ -12,9 +12,11 @@ public interface Container {
     
     void removeChild(Container container);
     
-    void invoke(HttpRequest httpRequest, HttpResponse htpHttpResponse);
+    void invoke(HttpRequest httpRequest, HttpResponse httpResponse);
     
     void setParent(Container container);
     
     String getName();
+    
+    void setName(String name);
 }

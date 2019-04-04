@@ -12,6 +12,8 @@ import com.feivirus.minitomcat.pipeline.Valve;
 public class SimpleWrapper implements Wrapper, Pipeline {
     private Pipeline pipeline;
     
+    private String name;
+    
     public SimpleWrapper() {
         pipeline = new SimplePipeline(this);
         pipeline.setBasic(new SimpleWrapperValve());
@@ -68,8 +70,11 @@ public class SimpleWrapper implements Wrapper, Pipeline {
     }
 
     public String getName() {
-        // TODO Auto-generated method stub
-        return null;
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
     
 }
