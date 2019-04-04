@@ -18,5 +18,7 @@ public class BusinessConstant {
     
     public static final int ZERO_VALUE = 0;
     
-    public static final String TEST_REQUEST_URL = "http://localhost:8080/servlet/hello";
+    public static final String TEST_REQUEST_URL = "/servlet1";
+    
+    public static final String PROTOCOL = "http";
 }

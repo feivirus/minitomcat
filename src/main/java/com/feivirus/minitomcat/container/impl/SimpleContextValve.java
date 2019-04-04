@@ -10,6 +10,7 @@ import com.feivirus.minitomcat.pipeline.Valve;
 import com.feivirus.minitomcat.pipeline.ValveContext;
 
 public class SimpleContextValve implements Valve, Contained {
+    private Container container;    
 
     /**
      * 1.通过url的协议找到context的mapper
@@ -19,18 +20,18 @@ public class SimpleContextValve implements Valve, Contained {
     public void invoke(HttpRequest httpRequest, HttpResponse httpResponse, ValveContext valveContext) {
         Context context = (Context)getContainer();
         
-        Wrapper wrapper = (Wrapper)context.map(httpRequest);
-        wrapper.invoke(httpRequest, httpResponse);
+        if (context.map(httpRequest) != null) {
+            Wrapper wrapper = (Wrapper)context.map(httpRequest);
+            wrapper.invoke(httpRequest, httpResponse);
+        }        
     }
 
     public void setContainer(Container container) {
-        // TODO Auto-generated method stub
-        
+        this.container = container;
     }
 
     public Container getContainer() {
-        // TODO Auto-generated method stub
-        return null;
+        return container;
     }
 
 }

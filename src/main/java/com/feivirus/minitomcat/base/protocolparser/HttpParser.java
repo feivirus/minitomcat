@@ -10,6 +10,7 @@ public class HttpParser implements Parser<String, HttpProtocol>{
         HttpProtocol httpProtocol = new HttpProtocol();
         
         httpProtocol.setUrl(BusinessConstant.TEST_REQUEST_URL);
+        httpProtocol.setProtocol(BusinessConstant.PROTOCOL);
         return httpProtocol;
     } 
 

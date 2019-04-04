@@ -40,6 +40,9 @@ public class SimpleContext implements Context, Pipeline {
         if (servletMapping == null) {
             servletMapping = new HashMap<String, String>();
         }
+        if (protocolMapper == null) {
+            protocolMapper = new HashMap<String, Mapper>();
+        }
     }
 
     public void addWrapper(Wrapper wrapper) {
