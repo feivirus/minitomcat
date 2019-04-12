@@ -54,10 +54,10 @@ public class HttpRequest implements ServletRequest{
             stringBuffer.append((char)buffer[i]);
         }
        
-        internalParse(stringBuffer);
+        parseInternal(stringBuffer);
     }
     
-    public void internalParse(StringBuffer buffer) {
+    public void parseInternal(StringBuffer buffer) {
         HttpParser parser = new HttpParser();
         
         httpProtocol = parser.parse(buffer.toString());

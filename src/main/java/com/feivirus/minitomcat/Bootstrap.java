@@ -11,6 +11,16 @@ import com.feivirus.minitomcat.container.impl.SimpleWrapper;
 import com.feivirus.minitomcat.pipeline.Pipeline;
 import com.feivirus.minitomcat.pipeline.Valve;
 
+/**
+ * TODO
+ * 1.manager(session,cookie)
+ * 2.log
+ * 3.detailed lifecycle
+ * 4.class loader
+ * 5. multi io model support
+ * @author feivirus
+ *
+ */
 public class Bootstrap {
     public static void main(String[] args) {
         System.out.println("Tomcat starting ");
