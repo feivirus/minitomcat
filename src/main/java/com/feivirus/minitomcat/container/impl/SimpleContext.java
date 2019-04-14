@@ -11,6 +11,7 @@ import com.feivirus.minitomcat.container.Container;
 import com.feivirus.minitomcat.container.Context;
 import com.feivirus.minitomcat.container.Mapper;
 import com.feivirus.minitomcat.container.Wrapper;
+import com.feivirus.minitomcat.manager.Manager;
 import com.feivirus.minitomcat.pipeline.Pipeline;
 import com.feivirus.minitomcat.pipeline.Valve;
 
@@ -31,6 +32,8 @@ public class SimpleContext implements Context, Pipeline {
      * 不同协议对应的真正的mapper，这个mapper理解为真实的Context
      */
     private Map<String, Mapper> protocolMapper;
+    
+    private Manager manager;
     
     public SimpleContext() {
         pipeline.setBasic(new SimpleContextValve());
@@ -142,4 +145,24 @@ public class SimpleContext implements Context, Pipeline {
         mapper.setContainer(this);
         protocolMapper.put(mapper.getProtocol(), mapper);
     }
+
+    public void setManager(Manager manager) {
+        this.manager = manager;
+    }
+
+    public Container getContainer() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public Container getParent() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public Manager getManager() {
+        return this.manager;
+    }
+    
+    
 }

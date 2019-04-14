@@ -8,6 +8,8 @@ import com.feivirus.minitomcat.container.impl.ClientIPLogValve;
 import com.feivirus.minitomcat.container.impl.SimpleContext;
 import com.feivirus.minitomcat.container.impl.SimpleContextMapper;
 import com.feivirus.minitomcat.container.impl.SimpleWrapper;
+import com.feivirus.minitomcat.manager.Manager;
+import com.feivirus.minitomcat.manager.StandardManager;
 import com.feivirus.minitomcat.pipeline.Pipeline;
 import com.feivirus.minitomcat.pipeline.Valve;
 
@@ -51,6 +53,9 @@ public class Bootstrap {
         Mapper mapper = new SimpleContextMapper();
         mapper.setProtocol("http");
         context.addMapper(mapper);
+        
+        Manager manager = new StandardManager();
+        context.setManager(manager);
         
         connector.setContainer(context);
         connector.start();

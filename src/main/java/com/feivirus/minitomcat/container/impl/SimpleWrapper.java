@@ -6,6 +6,7 @@ import com.feivirus.minitomcat.base.HttpRequest;
 import com.feivirus.minitomcat.base.HttpResponse;
 import com.feivirus.minitomcat.container.Container;
 import com.feivirus.minitomcat.container.Wrapper;
+import com.feivirus.minitomcat.manager.Manager;
 import com.feivirus.minitomcat.pipeline.Pipeline;
 import com.feivirus.minitomcat.pipeline.Valve;
 
@@ -75,6 +76,26 @@ public class SimpleWrapper implements Wrapper, Pipeline {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Container getContainer() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public void setManager(Manager manager) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public Container getParent() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public Manager getManager() {
+        // TODO Auto-generated method stub
+        return null;
     }
     
 }

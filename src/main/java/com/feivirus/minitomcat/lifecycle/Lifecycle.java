@@ -6,7 +6,7 @@ public interface Lifecycle {
     void stop();
     
     void addListener(LifecycleListener lifecycleListener);
-    
+      
     void removeListener(LifecycleListener lifecycleListener);
     
     LifecycleListener[] findListeners();

@@ -9,6 +9,7 @@ import com.feivirus.minitomcat.base.HttpRequest;
 import com.feivirus.minitomcat.base.HttpResponse;
 import com.feivirus.minitomcat.container.Contained;
 import com.feivirus.minitomcat.container.Container;
+import com.feivirus.minitomcat.container.Context;
 import com.feivirus.minitomcat.pipeline.Valve;
 import com.feivirus.minitomcat.pipeline.ValveContext;
 
@@ -26,6 +27,10 @@ public class SimpleWrapperValve implements Valve, Contained{
     public void invoke(HttpRequest httpRequest, HttpResponse httpResponse, ValveContext valveContext) {
         SimpleWrapper simpleWrapper = (SimpleWrapper)getContainer();
         Servlet servlet = simpleWrapper.allocate();
+        
+        //获取sesson
+        Context context = (Context)simpleWrapper.getParent();
+        httpRequest.setContext(context);
         
         try {
             System.out.println("简单servlet处理");

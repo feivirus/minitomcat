@@ -4,9 +4,13 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.session.HttpSession;
 
 import com.feivirus.minitomcat.base.protocolparser.HttpParser;
 import com.feivirus.minitomcat.base.protocolparser.HttpProtocol;
+import com.feivirus.minitomcat.container.Container;
+import com.feivirus.minitomcat.container.Context;
+import com.feivirus.minitomcat.manager.Manager;
 import com.feivirus.minitomcat.util.BusinessConstant;
 
 import lombok.Data;
@@ -29,6 +33,12 @@ public class HttpRequest implements ServletRequest{
      */
     private HttpProtocol httpProtocol;
     
+    /**
+     * 网站信息，比如用来获取session
+     */
+    private Context context;
+    
+    private String sessionId;
     
     public HttpRequest(InputStream inputStream) {
         this.inputStream = inputStream;
@@ -62,4 +72,23 @@ public class HttpRequest implements ServletRequest{
         
         httpProtocol = parser.parse(buffer.toString());
     }
+    
+    public HttpSession getSession() {
+        if (context == null) {
+            return null;
+        }
+        
+        Manager manager = context.getManager();
+        if (manager == null) {
+            return null;
+        }
+        
+       if (sessionId == null) {
+           return (HttpSession)manager.createSession();
+       }
+       
+       return (HttpSession)manager.findSession(sessionId);
+    }
+        
+    
 }
