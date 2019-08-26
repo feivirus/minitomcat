@@ -2,24 +2,24 @@ package com.feivirus.minitomcat.handlerchain;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import lombok.Data;
 
 @Data
 public class HandlerChainImpl<T extends HandlerContext> implements HandlerChain<T> {
 
-    private Lock lock;
+    private ReadWriteLock lock;
 
     private HandlerNode<T> head;
 
     private HandlerNode<T> tail;
 
     public HandlerChainImpl() {
-        lock = new ReentrantLock();
+        lock = new ReentrantReadWriteLock();
     }
 
     public void startHandle(T context) {
-        lock.lock();
+        lock.readLock().lock();
         HandlerNode<T> node = head;
 
         while (node != null) {
@@ -32,37 +32,67 @@ public class HandlerChainImpl<T extends HandlerContext> implements HandlerChain<
             node = node.getNextHandlerNode();
         }
 
-        lock.unlock();
+        lock.readLock().unlock();
     }
 
+    
+    @Override
     public void addHandler(Handler<T> handler) {
-        lock.lock();
-
+        lock.writeLock().lock();
         if (head == null) {
             head = new HandlerNode<T>();
+
             head.setHandler(handler);
             head.setNextHandlerNode(null);
             tail = head;
         } else {
-            HandlerNode<T> node = new HandlerNode<T>();
-            node.setHandler(handler);
+            HandlerNode<T> node = new HandlerNode<>();
 
+            node.setHandler(handler);
+            node.setNextHandlerNode(null);
             tail.setNextHandlerNode(node);
             tail = node;
         }
-        lock.unlock();
+
+        lock.writeLock().unlock();
     }
 
-    /**
-     * 删除节点 TODO
-     */
+    @Override
     public void removeHandler(Handler<T> handler) {
-        lock.lock();
-        if (head != null) {
-
+        lock.writeLock().lock();
+        if (head == null) {
+            lock.writeLock().unlock();
+            return;
         }
-
-        lock.unlock();
+        // 移除头结点
+        if (head.getHandler().equals(handler)) {
+            head = head.getNextHandlerNode();
+            if (tail.getHandler().equals(handler)) {
+                tail = null;
+            }
+            lock.writeLock().unlock();
+            return;
+        }
+        
+        HandlerNode<T> node = head;
+        HandlerNode<T> prevNode = node;
+        
+        while(node != null) {
+            if (node.getHandler().equals(handler)) {
+                prevNode.setNextHandlerNode(node.getNextHandlerNode());
+                
+                //移除最后一个节点
+                if (node.equals(tail)) {
+                    tail = prevNode;
+                }
+                break;
+            }
+            
+            prevNode = node;
+            node = node.getNextHandlerNode();           
+        }        
+       
+        lock.writeLock().unlock();
     }
 
 }
